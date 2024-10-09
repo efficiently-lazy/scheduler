@@ -8,22 +8,22 @@ if __name__ == "__main__":
     model = pyo.ConcreteModel()
 
     # Define the sets
-    model.P = pyo.RangeSet(1, 5)
-    model.D = pyo.RangeSet(1, 3)
-    model.M = pyo.RangeSet(1, 10)
-    model.T = pyo.RangeSet(1, 20)
+    model.P = pyo.RangeSet(1, 7)
+    model.D = pyo.RangeSet(1, 2)
+    model.M = pyo.RangeSet(1, 5)
+    model.T = pyo.RangeSet(1, 4)
 
     # Define the parameters
     O_values = {}
-    for i in range(1, 6):
-        for j in range(1, 11):
-            O_values[i, j] = random.randint(0, 1)
+    for p in model.P:
+        for m in model.M:
+            O_values[p, m] = random.randint(0, 1)
     
     
     B_values = {}
-    for i in range(1, 4):
-        for j in range(1, 11):
-            B_values[i, j] = random.randint(0, 1)
+    for d in model.D:
+        for m in model.M:
+            B_values[d, m] = random.randint(0, 1)
     
     model.O = pyo.Param(
         model.P, model.M,
@@ -78,7 +78,7 @@ if __name__ == "__main__":
         return sum(
             model.ScheduleReview[d, m, p, t]
             for d in model.D
-            for m in model.M) <= model.ProductReviewed[p, t]
+            for m in model.M) == model.ProductReviewed[p, t]
     
     def developer_max_once_review(model, d, t):
         return sum(
@@ -112,19 +112,10 @@ if __name__ == "__main__":
     # Create a model instance and optimize
     instance = model.create_instance()
     results = solver.solve(instance)
-
-    # Print the results
-    print(model.obj())
+    # instance.display()
 
     for v in instance.component_objects(pyo.Var, active=True):
         for index in v:
             if pyo.value(v[index]) != 0:
                 print("Variable",v)  
                 print ("   ",index, pyo.value(v[index]))  
-
-    # for parmobject in instance.component_objects(pyo.Param, active=True):
-    #     nametoprint = str(str(parmobject.name))
-    #     print ("Parameter ", nametoprint)  
-    #     for index in parmobject:
-    #         vtoprint = pyo.value(parmobject[index])
-    #         print ("   ",index, vtoprint)  
