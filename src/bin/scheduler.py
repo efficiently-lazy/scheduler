@@ -1,33 +1,26 @@
-from pyomo.environ import SolverFactory
+from pyomo import environ as pyo
 import pandas as pd
 from utils.io_handler import load_input_data, write_output_data
-from bin.model import create_scheduling_model
+import bin.model as m
 
-def schedule_meetings(input_file, output_file):
+def schedule_meetings(input_file: str, output_path: str):
     # Load data
-    products, availability = load_input_data(input_file)
+    product_ownership, work_relations, availability = load_input_data(input_file)
     
-    # Prepare data for model
-    product_dict = {row['ProductID']: row for _, row in products.iterrows()}
-    team_availability = {row['Timeslot']: row['Available'] for _, row in availability.iterrows()}
+    # Create model and initialize the parameters, sets, and variables
+    model = m.initialize_scheduler(product_ownership, work_relations, availability)
+
+    # Set objective function for the model to maximize number of reviewed products
+    m.initialize_objective(model)
+
+    # Add constraints to the model
+    m.add_constraints(model)
     
-    # Create model
-    model = create_scheduling_model(product_dict, team_availability)
-    
-    # Solve model
-    solver = SolverFactory('glpk')
-    solver.solve(model)
-    
-    # Process results
-    schedule = []
-    for p in model.products:
-        for t in model.timeslots:
-            if model.schedule[p, t].value == 1:
-                schedule.append({
-                    'ProductID': p,
-                    'Timeslot': t,
-                    'Scheduled': 'Yes'
-                })
-                
-    schedule_df = pd.DataFrame(schedule)
-    write_output_data(schedule_df, output_file)
+
+    # Solve the model using the GLPK solver
+    solver = pyo.SolverFactory('glpk')
+    instance = model.create_instance()
+    results = solver.solve(instance)
+
+    # Print results
+    m.print_results(instance)
