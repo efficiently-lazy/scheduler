@@ -24,3 +24,7 @@ def schedule_meetings(input_file: str, output_path: str):
 
     # Print results
     m.print_results(instance)
+
+    # Write results in an excel file
+    result = m.create_result_schedule(instance, availability)
+    write_output_data(result, output_path)

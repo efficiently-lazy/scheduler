@@ -10,6 +10,7 @@ This optimization program serves to find the suitable schedule between set of pr
 ## Parameters
 - $O_{p}^{m} \in \{0,1\}$ : Binary matrix representing the ownership of product $p$ to the product manager $m$. If $O_{p}^{m} = 1$, product $p$ is owned by product manager $m$, otheriwse $O_{p}^{m} = 0$.
 - $B^{d,m} \in \{0,1\}$ : Binary matrix reflecting whether product developer $d$ belongs to the same team of product manager $m$ $(B^{d,m} = 1)$ or not $(B^{d,m} = 0)$.
+- $A^i_t \in \{0,1\}$: Binary matrix indicating whether developer or manager $(i\in \{D \cup P\})$ schedule in period $t$ is blocked $(A^i_t=1)$ or not $(A^i_t=0)$.
 
 ## Variables
 - $y_{p,t} \in \{0,1\}$ : Binary variable to represent whether product $p$ has been reviewed in timeslot $t$ $(y_{p,t} = 1)$ or not $(y_{p,t} = 0)$.
@@ -56,8 +57,13 @@ $$ \tag{6}
 \sum_{d \in D} \sum_{p \in P} x_{p,t}^{d,m} \leq 1 \qquad \forall m \in M, t \in T 
 $$
 
-7. Non-negativity constraints for the variables.
+7. When a manager $m$ or developer $d$ is scheduled to review a product $p$ at time $t$, then they should not be blocked in their schedule at that period.
 $$ \tag{7}
+2\cdot x_{p,t}^{d,m} \leq (2-A^d_t-A^m_t) \qquad \forall d \in D, m \in M, p \in P, t \in T
+$$
+
+8. Non-negativity constraints for the variables.
+$$ \tag{8}
 x_{p,t}^{d,m} \in \{0,1\} \qquad \forall m \in M, d \in D, p \in P, t \in T 
 \\\
 y_{p,t} \in \{0,1\} \qquad \forall p \in P, t \in T
