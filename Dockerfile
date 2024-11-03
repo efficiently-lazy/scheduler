@@ -1,20 +1,18 @@
-# Step 1: Use a base image
+# Start with a base image that includes Python
 FROM python:3.9-slim
 
-# Step 2: Set the working directory inside the container
+# Set environment variables for unbuffered output (optional for debugging)
+ENV PYTHONUNBUFFERED=1
+
+# Set the working directory inside the container
 WORKDIR /app
 
-# Step 3: Copy requirements.txt to the container
+# Copy requirements and install dependencies
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Step 4: Install the required packages
-RUN pip install -r requirements.txt
+# Copy the entire project into the container
+COPY src/ /app/src
 
-# Step 5: Copy the rest of the application code into the container
-COPY . .
-
-# Step 6: Expose the port the app runs on (e.g., 5000 for a Flask app)
-EXPOSE 5000
-
-# Step 7: Define the command to run the application
-CMD ["python"]
+# Default to an interactive shell
+CMD ["bash"]
