@@ -55,3 +55,17 @@ def print_results(instance: pyo.ConcreteModel):
             if pyo.value(v[index]) != 0:
                 print("Variable",v)  
                 print ("   ",index, pyo.value(v[index]))  
+
+def create_result_schedule(instance: pyo.ConcreteModel,
+                           availability: pd.DataFrame) -> pd.DataFrame:
+    """ Create a dataframe based on the availability matrix plus
+    the newly assigned schedule for each developer and manager
+    with the to-be-reviewed products.
+    """
+    result = availability.copy()
+    for (d, m, p, t) in instance.ScheduleReview:
+        if pyo.value(instance.ScheduleReview[d, m, p, t]) != 0:
+            result.loc[t, d] = p
+            result.loc[t, m] = p
+
+    return result
