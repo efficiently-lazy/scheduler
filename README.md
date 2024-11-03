@@ -27,44 +27,54 @@ Maximizing number of products $p$ to be reviewed within the provided timeslots $
 
 ## Constraints
 
-1. Products $p$ can only be reviewed maximum once within the available timeslots. 
-$$ \tag{1}
+1. Products $p$ can only be reviewed maximum once within the available timeslots.
+
+$$
 \sum_{t \in T} y_{p,t} \leq 1 \qquad \forall p \in P 
 $$
 
 2. Product manager $m$ can only review the product belonging to him/her.
-$$ \tag{2}
+
+$$ 
 \sum_{d \in D} \sum_{t \in T} x_{p,t}^{d,m} \leq O_p^m \qquad \forall m \in M, p \in P 
 $$
 
 3. Product manager $m$ can only review the product together with the developer belonging to the same team.
-$$ \tag{3}
+
+$$
 \sum_{p \in P} \sum_{t \in T} x_{p,t}^{d,m} \leq B^{d,m} \cdot |P| \qquad \forall m \in M, d \in D 
 $$
 
 4. Linking constraint between $x_{p,t}^{d,m}$ and $y_{p,t}$.
-$$ \tag{4}
+
+$$
 \sum_{d \in D} \sum_{m \in M} x_{p,t}^{d,m} \leq y_{p,t} \qquad \forall p \in P, t \in T 
 $$
 
 5. Each product developer $d$ can only review one product at a timeslot $t$.
-$$ \tag{5}
+
+$$
 \sum_{m \in M} \sum_{p \in P} x_{p,t}^{d,m} \leq 1 \qquad \forall d \in D, t \in T 
 $$
 
 6. Each product manager $m$ can only review one product at a timeslot $t$.
-$$ \tag{6}
+
+$$
 \sum_{d \in D} \sum_{p \in P} x_{p,t}^{d,m} \leq 1 \qquad \forall m \in M, t \in T 
 $$
 
 7. When a manager $m$ or developer $d$ is scheduled to review a product $p$ at time $t$, then they should not be blocked in their schedule at that period.
-$$ \tag{7}
+
+$$
 2\cdot x_{p,t}^{d,m} \leq (2-A^d_t-A^m_t) \qquad \forall d \in D, m \in M, p \in P, t \in T
 $$
 
 8. Non-negativity constraints for the variables.
-$$ \tag{8}
-x_{p,t}^{d,m} \in \{0,1\} \qquad \forall m \in M, d \in D, p \in P, t \in T 
-\\\
-y_{p,t} \in \{0,1\} \qquad \forall p \in P, t \in T
+
+$$
+x_{p,t}^{d,m} \in \{0,1\} \quad \forall m \in M, d \in D, p \in P, t \in T 
+$$
+
+$$
+y_{p,t} \in \{0,1\} \quad \forall p \in P, t \in T
 $$
