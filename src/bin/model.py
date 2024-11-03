@@ -46,6 +46,8 @@ def add_constraints(model: pyo.ConcreteModel):
                                 rule=const.developer_max_once_review)
     model.c6 = pyo.Constraint(model.Managers, model.Time,
                                 rule=const.manager_max_once_review)
+    model.c7 = pyo.Constraint(model.Managers, model.Developers, model.Products, model.Time,
+                                rule=const.schedules_not_blocked)
 
 def print_results(instance: pyo.ConcreteModel):
     for v in instance.component_objects(pyo.Var, active=True):

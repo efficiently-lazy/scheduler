@@ -20,6 +20,7 @@ def load_input_data(input_file) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFram
     # Convert x into 1 and NaN into 0
     product_ownership = product_ownership.replace('x', 1).fillna(0)
     work_relations = work_relations.replace('x', 1).fillna(0)
+    availability = availability.replace('x', 1).fillna(0)
 
     return product_ownership, work_relations, availability
 

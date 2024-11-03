@@ -49,3 +49,10 @@ def manager_max_once_review(model, m, t):
         model.ScheduleReview[d, m, p, t]
         for d in model.Developers
         for p in model.Products) <= 1
+
+def schedules_not_blocked(model, m, d, p, t):
+    """ Schedules of participating developer and manager should not be blocked
+     during the assigned product review appointments. """
+    return (
+        2 * model.ScheduleReview[d, m, p, t]  <= 
+        (2 - model.Availability[t, d] - model.Availability[t, m]))

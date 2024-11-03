@@ -44,6 +44,13 @@ def init_params(model: pyo.ConcreteModel,
             (d, m): work_relations.loc[d,m]
             for d, m in model.Developers * model.Managers
         })
+    model.Availability = pyo.Param(
+        model.Time * model.Managers | model.Time * model.Developers,
+        initialize={
+            (t, i): availability.loc[t, i] 
+            for t in model.Time
+            for i in model.Managers | model.Developers
+        })
 
 def init_variables(model: pyo.ConcreteModel) -> None:
     """ Initialize variables for the optimization model.
