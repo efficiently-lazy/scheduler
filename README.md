@@ -28,7 +28,7 @@ Maximizing number of products $p$ to be reviewed within the provided timeslots $
 ## Constraints
 
 1. Products $p$ can only be reviewed maximum once within the available timeslots. 
-$$ \tag{1}
+$$
 \sum_{t \in T} y_{p,t} \leq 1 \qquad \forall p \in P 
 $$
 
