@@ -1,6 +1,48 @@
 # Scheduling Optimization Program
 This optimization program serves to find the suitable schedule between set of product developers and product managers to review the set of products within the given possible timeslots.
 
+## Usage Intruction
+
+1. **Set Up Virtual Environment and Change Directory**
+    
+    In your terminal, set up a virtual environment, then navigate to the project directory `\or-projects`.
+``` bash
+# Create a virtual environment (optional but recommended)
+python -m venv env
+
+# Activate the virtual environment
+# On Windows
+.\env\Scripts\activate
+# On macOS/Linux
+source env/bin/activate
+
+# Change directory to or-projects
+cd path/to/or-projects
+```
+
+2. **Install Dependencies**
+    
+    Install the required packages specified in requirements.txt:
+``` bash
+pip install -r requirements.txt
+```
+
+3. **Adjust Input Data**
+
+    Open src/data/input.xlsx and make the following adjustments:
+
+- **Sheet "Ownership Products":** Update the matrix where each column header represents a manager, and each row header represents a product. Define ownership relations by filling in this matrix.
+- **Sheet "Work Relation":** This matrix represents whether managers (columns) work with developers (rows). Fill in the cells to indicate collaboration.
+- **Sheet "Blocked Calendar":** Update this matrix to specify blocked periods for managers and developers. Rows represent time periods, and columns represent each person (managers and developers).
+
+4. **Run the Program**
+
+    Execute the following command to run the program:
+``` bash
+python src/main.py
+```
+
+
 ## Sets
 - $p \in P$ : set of products to be reviewed
 - $d \in D$ : set of product developers to review the products
