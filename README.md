@@ -1,7 +1,13 @@
 # Scheduling Optimization Program
 This optimization program serves to find the suitable schedule between set of product developers and product managers to review the set of products within the given possible timeslots.
 
-## Usage Intruction
+## Requirements
+
+- Python 3.8 or higher
+- openpyxl 3.1
+- pyomo 6.8
+
+## Installation
 
 1. **Set Up Virtual Environment and Change Directory**
     
