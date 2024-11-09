@@ -1,5 +1,4 @@
 from pyomo import environ as pyo
-import random
 import pandas as pd
 import numpy as np
 
@@ -49,23 +48,3 @@ def add_constraints(model: pyo.ConcreteModel):
     model.c7 = pyo.Constraint(model.Managers, model.Developers, model.Products, model.Time,
                                 rule=const.schedules_not_blocked)
 
-def print_results(instance: pyo.ConcreteModel):
-    for v in instance.component_objects(pyo.Var, active=True):
-        for index in v:
-            if pyo.value(v[index]) != 0:
-                print("Variable",v)  
-                print ("   ",index, pyo.value(v[index]))  
-
-def create_result_schedule(instance: pyo.ConcreteModel,
-                           availability: pd.DataFrame) -> pd.DataFrame:
-    """ Create a dataframe based on the availability matrix plus
-    the newly assigned schedule for each developer and manager
-    with the to-be-reviewed products.
-    """
-    result = availability.copy()
-    for (d, m, p, t) in instance.ScheduleReview:
-        if pyo.value(instance.ScheduleReview[d, m, p, t]) != 0:
-            result.loc[t, d] = p
-            result.loc[t, m] = p
-
-    return result
