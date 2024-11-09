@@ -2,11 +2,16 @@ from pyomo import environ as pyo
 import pandas as pd
 
 def print_results(instance: pyo.ConcreteModel):
-    for v in instance.component_objects(pyo.Var, active=True):
-        for index in v:
-            if pyo.value(v[index]) != 0:
-                print("Variable",v)  
-                print ("   ",index, pyo.value(v[index]))  
+    print("\nOptimization results:")
+    reviewed_products = []
+
+    for index in instance.ProductReviewed:
+        value = pyo.value(instance.ProductReviewed[index])
+        if value != 0:
+            reviewed_products.append(index[0])
+
+    print(f"Number of reviewed products: {len(reviewed_products)}")
+    print(f"Reviewed products:\n {reviewed_products}")
 
 def create_result_schedule(instance: pyo.ConcreteModel,
                            dict_availability: dict[pd.DataFrame]

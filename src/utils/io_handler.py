@@ -62,6 +62,8 @@ def load_availability(availability_file) -> pd.DataFrame:
             dict_availability[sheet] = availability_original
             consolidated_availability = pd.concat([consolidated_availability, availability])
     
+        print(f"Number of days provided: {len(dict_availability)}")
+
     except FileNotFoundError:
         raise FileNotFoundError(f"File {availability_file} cannot be found.")
     

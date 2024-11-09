@@ -18,6 +18,10 @@ def init__set(model: pyo.ConcreteModel,
     model.Managers = pyo.Set(initialize=list(product_ownership.columns))
     model.Time = pyo.Set(initialize=list(availability.index))
 
+    print(f"Number of products: {len(model.Products)}")
+    print(f"Number of developers: {len(model.Developers)}")
+    print(f"Number of managers: {len(model.Managers)}")
+
 def binary_converter(value: str) -> int:
     if value:
         return 1

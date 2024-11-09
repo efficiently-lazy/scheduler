@@ -22,14 +22,14 @@ def schedule_meetings(input_file: str, availability_file: str, output_path: str)
 
     # Solve the model using the GLPK solver
     solver = pyo.SolverFactory('glpk')
-    instance = model.create_instance()
-    results = solver.solve(instance)
+    result_solver = solver.solve(model)
+    print(f"\nSolver status: {result_solver.solver.status} and termination status: {result_solver.solver.termination_condition}")
 
     # Print results for quick inspection
-    # m.print_results(instance)
+    print_results(model)
 
     # Write results in an excel file
-    result = create_result_schedule(instance, dict_availability)
+    result = create_result_schedule(model, dict_availability)
     write_output_data(result, output_path)
 
-    print('Scheduler finished!')
+    print('\nScheduler finished!')
