@@ -9,44 +9,57 @@ This optimization program serves to find the suitable schedule between set of pr
 
 ## Installation
 
-1. **Set Up Virtual Environment and Change Directory**
+1. **Set Up Virtual Environment in CONDA**
     
-    In your terminal, set up a virtual environment, then navigate to the project directory `\or-projects`.
-``` bash
-# Create a virtual environment (optional but recommended)
-python -m venv env
+    It is recommended to execute installation using `conda` due to `pyomo` module. Go to your anaconda prompt and set up your virtual environment.
+    ``` bash
+    # Create conda virtual environment
+    conda create --name <env-name> python=<3.9 or higher>
+    conda activate <env-name>
 
-# Activate the virtual environment
-# On Windows
-.\env\Scripts\activate
-# On macOS/Linux
-source env/bin/activate
+    # Change directory to or-projects
+    cd path/to/or-projects
+    ```
 
-# Change directory to or-projects
-cd path/to/or-projects
-```
+2. **Install Dependencies**    
+    ``` bash
+    # Install required dependencies 
+    pip install -r requirements.txt
 
-2. **Install Dependencies**
-    
-    Install the required packages specified in requirements.txt:
-``` bash
-pip install -r requirements.txt
-```
+    # Install open-source optimization solver if you do not have any
+    conda install -c conda-forge ipopt glpk
+    ```
 
 3. **Adjust Input Data**
 
-    Open src/data/input.xlsx and make the following adjustments:
+    1. **Modify `input.xlsx` Data:**
 
-- **Sheet "Ownership Products":** Update the matrix where each column header represents a manager, and each row header represents a product. Define ownership relations by filling in this matrix.
-- **Sheet "Work Relation":** This matrix represents whether managers (columns) work with developers (rows). Fill in the cells to indicate collaboration.
-- **Sheet "Blocked Calendar":** Update this matrix to specify blocked periods for managers and developers. Rows represent time periods, and columns represent each person (managers and developers).
+        Open `src/data/input.xlsx` and make the following adjustments:
+
+        - **Sheet "Ownership Products":** This sheet defines the ownership relationships between managers and products. 
+            - Each **column header** represents a manager.
+            - Each **row header** represents a product.
+            - Fill in the matrix to indicate which managers are responsible for which products.
+
+        - **Sheet "Work Relation":** This sheet represents collaboration between managers and developers.
+            - **Columns** represent managers.
+            - **Rows** represent developers.
+            - Fill in the matrix cells to indicate whether a manager and a developer work together.
+
+    2. **Modify `availability.xlsx` Data:**
+
+        Open `src/data/availability.xlsx` and adjust the schedules with the following guidelines:
+
+        - **Sheet Name:** Set each sheet name to the date for which the schedule needs to be assigned.
+        - **Table Y-Axis:** List timestamps representing the times for scheduled assignments.
+        - **Header Row:** Include the names of the developers and managers whose schedules need to be aligned.
 
 4. **Run the Program**
 
     Execute the following command to run the program:
-``` bash
-python src/main.py
-```
+    ``` bash
+    python src/main.py
+    ```
 ## Model Explanation
 
 ### Sets
