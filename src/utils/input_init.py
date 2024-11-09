@@ -18,6 +18,12 @@ def init__set(model: pyo.ConcreteModel,
     model.Managers = pyo.Set(initialize=list(product_ownership.columns))
     model.Time = pyo.Set(initialize=list(availability.index))
 
+def binary_converter(value: str) -> int:
+    if value:
+        return 1
+    else:
+        return 0
+
 def init_params(model: pyo.ConcreteModel,
                 product_ownership: pd.DataFrame,
                 work_relations: pd.DataFrame,
@@ -34,24 +40,24 @@ def init_params(model: pyo.ConcreteModel,
         model.Products,
         model.Managers,
         initialize={
-            (p, m): product_ownership.loc[p,m]
+            (p, m): binary_converter(product_ownership.loc[p,m])
             for p, m in model.Products * model.Managers
         })
     model.WorkRelations = pyo.Param(
         model.Developers,
         model.Managers,
         initialize={
-            (d, m): work_relations.loc[d,m]
+            (d, m): binary_converter(work_relations.loc[d,m])
             for d, m in model.Developers * model.Managers
         })
     model.Availability = pyo.Param(
         model.Time * model.Managers | model.Time * model.Developers,
         initialize={
-            (t, i): availability.loc[t, i] 
+            (t, i): binary_converter(availability.loc[t, i])
             for t in model.Time
             for i in model.Managers | model.Developers
         })
-
+    
 def init_variables(model: pyo.ConcreteModel) -> None:
     """ Initialize variables for the optimization model.
 
