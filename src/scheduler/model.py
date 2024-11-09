@@ -1,9 +1,8 @@
 from pyomo import environ as pyo
 import pandas as pd
-import numpy as np
 
-from utils.input_init import init__set, init_params, init_variables
-import utils.constraints as const
+from .utils.input_init import init__set, init_params, init_variables
+import scheduler.utils.constraints as const
 
 def initialize_scheduler(product_ownership: pd.DataFrame,
                          work_relations: pd.DataFrame,
