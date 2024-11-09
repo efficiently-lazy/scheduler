@@ -1,5 +1,6 @@
 # Scheduling Optimization Program
-This optimization program serves to find the suitable schedule between set of product developers and product managers to review the set of products within the given possible timeslots.
+
+This optimization model leverages operations research techniques to identify the most suitable scheduling arrangement between developers and managers for reviewing their products within available timeslots. By systematically evaluating constraints and preferences, this approach ensures an efficient and balanced schedule, optimizing both time utilization and collaboration.
 
 ## Requirements
 
