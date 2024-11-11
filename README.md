@@ -110,7 +110,7 @@ $$
 4. Linking constraint between $x_{p,t}^{d,m}$ and $y_{p,t}$.
 
 $$
-\sum_{d \in D} \sum_{m \in M} x_{p,t}^{d,m} \leq y_{p,t} \qquad \forall p \in P, t \in T 
+\sum_{d \in D} \sum_{m \in M} x_{p,t}^{d,m} = y_{p,t} \qquad \forall p \in P, t \in T 
 $$
 
 5. Each product developer $d$ can only review one product at a timeslot $t$.

@@ -27,7 +27,7 @@ def load_input_data(input_file) -> tuple[pd.DataFrame, pd.DataFrame]:
         raise Exception(f"An unexpected error occurred: {e}")
 
     # Convert 'x' into 1 and NaN into 0
-    product_ownership = product_ownership.replace('x', 1).fillna(0)
+    product_ownership = product_ownership.replace('X', 1).fillna(0)
     work_relations = work_relations.replace('x', 1).fillna(0)
 
     return product_ownership, work_relations
@@ -55,7 +55,7 @@ def load_availability(availability_file) -> pd.DataFrame:
         list_sheets = pd.ExcelFile(availability_file).sheet_names
         for sheet in list_sheets:
             availability_original = pd.read_excel(availability_file, sheet_name=sheet, index_col=0, dtype=str)
-            availability = availability_original.replace('x', 1).fillna(0)
+            availability = availability_original.replace('X', 1).fillna(0)
             availability.index = [sheet + ' || ' + str(idx) for idx in availability.index]
             
             # Allocation of availability dataframes
