@@ -1,5 +1,5 @@
 from pyomo import environ as pyo
-import pandas as pd
+from datetime import datetime
 
 from scheduler.utils.io_handler import load_input_data, load_availability,write_output_data
 from scheduler.utils.result_log import print_results, create_result_schedule
@@ -35,10 +35,11 @@ def schedule_meetings(input_file: str, availability_file: str, output_path: str)
     print('\nScheduler finished!')
 
 if __name__ == '__main__':
-    print('Scheduler starting...\n')
+    print(f'Scheduler starting at {datetime.now()}\n')
     input_file = 'src/data/input.xlsx'
     availability_file = 'src/data/availability.xlsx'
     output_path = 'src/data/output.xlsx'
 
     schedule_meetings(input_file, availability_file, output_path)
+    print(f'Scheduler finished at {datetime.now()}!')
 

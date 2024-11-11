@@ -11,7 +11,6 @@ def print_results(instance: pyo.ConcreteModel):
             reviewed_products.append(index[0])
 
     print(f"Number of reviewed products: {len(reviewed_products)}")
-    print(f"Reviewed products:\n {reviewed_products}")
 
 def create_result_schedule(instance: pyo.ConcreteModel,
                            dict_availability: dict[pd.DataFrame]
